@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientEngine.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\FriendshipsController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />

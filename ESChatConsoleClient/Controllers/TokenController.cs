@@ -9,7 +9,7 @@ namespace ESChatConsoleClient.Controllers
 {
     public class TokenController : Controller
     {
-        public TokenController(string serverUrl) : base(serverUrl)
+        public TokenController(string serverUrl, string controllerName) : base(serverUrl, controllerName)
         {
         }
 

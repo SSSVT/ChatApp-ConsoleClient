@@ -9,7 +9,7 @@ namespace ESChatConsoleClient.Controllers
 {
     public class MessagesController : Controller
     {
-        public MessagesController(string serverUrl) : base(serverUrl)
+        public MessagesController(string serverUrl, string controllerName) : base(serverUrl, controllerName)
         {
         }
 
@@ -25,7 +25,7 @@ namespace ESChatConsoleClient.Controllers
 
         public async Task<Message> CreateAsync(Message message)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

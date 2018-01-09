@@ -9,7 +9,7 @@ namespace ESChatConsoleClient.Controllers
 {
     public class ParticipantsController : Controller
     {
-        public ParticipantsController(string serverUrl) : base(serverUrl)
+        public ParticipantsController(string serverUrl, string controllerName) : base(serverUrl, controllerName)
         {
         }
 

@@ -8,7 +8,7 @@ namespace ESChatConsoleClient.Controllers
 {
     public class PasswordResetController : Controller
     {
-        public PasswordResetController(string serverUrl) : base(serverUrl)
+        public PasswordResetController(string serverUrl, string controllerName) : base(serverUrl, controllerName)
         {
         }
 
