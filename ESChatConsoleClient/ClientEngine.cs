@@ -1,9 +1,7 @@
-﻿using ESChatConsoleClient.Controllers;
+﻿using ESChatConsoleClient.Adapters;
+using ESChatConsoleClient.Controllers;
+using ESChatConsoleClient.Models.Server;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ESChatConsoleClient
@@ -11,60 +9,87 @@ namespace ESChatConsoleClient
     public sealed class ClientEngine
     {
         #region Fields
-        private readonly FriendshipsController _friendshipsController;
-        private readonly MessagesController _messagesController;
-        private readonly ParticipantsController _participantsController;
-        private readonly PasswordResetController _passwordResetController;
-        private readonly RegistrationController _registrationController;
-        private readonly RoomsController _roomsController;
-        private readonly TokenController _tokenController;
-        private readonly UsersController _usersController;
+        //Máš toto
+        private readonly FriendshipsAdapter _friendshipsAdapter;
+        private readonly MessagesAdapter _messagesAdapter;
+        private readonly ParticipantsAdapter _participantsAdapter;
+        private readonly PasswordResetAdapter _passwordResetAdapter;
+
+        //Beru si toto
+        private readonly RegistrationAdapter _registrationAdapter;
+        private readonly RoomsAdapter _roomsAdapter;
+        private readonly LoginAdapter _loginAdapter;
+        private readonly UsersAdapter _usersAdapter;
         #endregion
 
         public ClientEngine(string serverUrl)
         {
-            this._friendshipsController = new FriendshipsController(serverUrl, "Friendships");
-            this._messagesController = new MessagesController(serverUrl, "Messages");
-            this._participantsController = new ParticipantsController(serverUrl, "Participants");
-            this._passwordResetController = new PasswordResetController(serverUrl, "PasswordReset");
-            this._registrationController = new RegistrationController(serverUrl, "Registration");
-            this._roomsController = new RoomsController(serverUrl, "Rooms");
-            this._tokenController = new TokenController(serverUrl, "Token");
-            this._usersController = new UsersController(serverUrl, "Users");
+            this._friendshipsAdapter = new FriendshipsAdapter(new FriendshipsController(serverUrl, "Friendships"));
+            this._messagesAdapter = new MessagesAdapter(new MessagesController(serverUrl, "Messages"));
+            this._participantsAdapter = new ParticipantsAdapter(new ParticipantsController(serverUrl, "Participants"));
+            this._passwordResetAdapter = new PasswordResetAdapter(new PasswordResetController(serverUrl, "PasswordReset"));
+            this._registrationAdapter = new RegistrationAdapter(new RegistrationController(serverUrl, "Registration"));
+            this._roomsAdapter = new RoomsAdapter(new RoomsController(serverUrl, "Rooms"));
+            this._loginAdapter = new LoginAdapter(new TokenController(serverUrl, "Token"));
+            this._usersAdapter = new UsersAdapter(new UsersController(serverUrl, "Users"));
         }
 
         public async Task StartAsync()
         {
-            Console.WriteLine(await this.IsUsernameAvailableAsync("fam299"));
+            //Console.WriteLine(await this.IsUsernameAvailableAsync("fam299"));
 
             while (true)
             {
                 string userInput = Console.ReadLine();
 
-                switch (userInput.Split(new char[] { ' ' })[0])
+                string key = userInput.Split(new char[] { ' ' })[0];
+                string strKey = key.ToLower();
+
+                try
                 {
-                    case "login":
-                        userInput.Replace("login ", "");
-                        await this.LoginAsync(userInput);
-                        break;
-                    case "help":
-                        break;
-                    default:
-                        break;
+                    switch (strKey)
+                    {
+                        case "friend":
+                            await this._friendshipsAdapter.Execute(key, userInput);
+                            throw new NotImplementedException();
+                            break;
+                        
+                        case "participants":
+                            throw new NotImplementedException();
+                            break;
+
+                        case "passwordreset":
+                            throw new NotImplementedException();
+                            break;
+
+                        case "registration":
+                            throw new NotImplementedException();
+                            break;
+
+                        case "rooms":
+                            throw new NotImplementedException();
+                            break;
+
+                        case "login":
+                            await this._loginAdapter.Execute(key, userInput);
+                            throw new NotImplementedException();
+                            break;
+
+                        case "users":
+                            throw new NotImplementedException();
+                            break;
+
+                        default:
+                            Console.WriteLine("Message wrote");
+                            break;
+                    }
                 }
+                catch (Exception ex)
+                {
+                    //TODO: Save exception
+                    Console.WriteLine(ex.Message);
+                }                
             }
-        }
-
-        private async Task LoginAsync(string userInput)
-        {
-            //Regex.Match("", "").Value;
-
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> IsUsernameAvailableAsync(string username)
-        {
-            return await this._registrationController.IsUsernameAvailableAsync(username);
         }
     }
 }

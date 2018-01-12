@@ -45,6 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\Adapter.cs" />
+    <Compile Include="Adapters\FriendshipsAdapter.cs" />
+    <Compile Include="Adapters\LoginAdapter.cs" />
+    <Compile Include="Adapters\MessagesAdapter.cs" />
+    <Compile Include="Adapters\ParticipantsAdapter.cs" />
+    <Compile Include="Adapters\PasswordResetAdapter.cs" />
+    <Compile Include="Adapters\RegistrationAdapter.cs" />
+    <Compile Include="Adapters\RoomsAdapter.cs" />
+    <Compile Include="Adapters\UsersAdapter.cs" />
     <Compile Include="ClientEngine.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\FriendshipsController.cs" />
@@ -57,7 +66,7 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Models\Server\Friendship.cs" />
-    <Compile Include="Models\Server\LoginModel.cs" />
+    <Compile Include="Models\Server\UserCredentials.cs" />
     <Compile Include="Models\Server\Message.cs" />
     <Compile Include="Models\Server\Participant.cs" />
     <Compile Include="Models\Server\RegistrationModel.cs" />
@@ -71,9 +80,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Adapters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
