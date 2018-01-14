@@ -18,6 +18,13 @@ namespace ESChatConsoleClient.Adapters
         {
             input = this.RemoveCommand(key, input);
 
+            string findMatchPattern = "(-f|--find) ([0-9]+)";
+            string findAllMatchPattern = "(-F|--find-all)";
+            string findByUserIDMatchPattern = "(--find-by-user-id) ([0-9]+)";
+            string createMatchPattern = "(-C|--create) ";
+            string updateMatchPattern = "(-U|--update) ";
+            string deleteMatchPattern = "(-D|--delete) ";
+
             throw new NotImplementedException();
         }
     }

@@ -64,7 +64,6 @@ namespace ESChatConsoleClient
 
                         case "register":
                             await this._registrationAdapter.Execute(key, userInput);
-                            throw new NotImplementedException();
                             break;
 
                         case "rooms":

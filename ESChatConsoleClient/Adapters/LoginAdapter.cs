@@ -37,6 +37,7 @@ namespace ESChatConsoleClient.Adapters
 
                 TokenModel token = await this.TokenController.LoginAsync(credentials);
                 this.DataContext.Token = token;
+                Console.WriteLine($"Login: { _Successful }");
             }
             else
             {

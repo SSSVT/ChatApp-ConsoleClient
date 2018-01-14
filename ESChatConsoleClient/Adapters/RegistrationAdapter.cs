@@ -54,7 +54,7 @@ namespace ESChatConsoleClient.Adapters
                 };
 
                 this.DataContext.User = await this.RegistrationController.RegisterAsync(registration);
-                Console.WriteLine("Succesfully ");
+                Console.WriteLine($"Registration: { _Successful }");
             }
             else
             {

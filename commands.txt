@@ -1,0 +1,2 @@
+﻿registration -F FirstName -L LastName -B 2000-01-01 -G M -E example@example.com -U username -P password
+login -U username -P password
