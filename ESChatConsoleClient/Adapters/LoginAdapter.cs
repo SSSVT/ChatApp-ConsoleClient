@@ -19,7 +19,7 @@ namespace ESChatConsoleClient.Adapters
 
         public override async Task Execute(string key, string input)
         {
-            await base.Execute(key, input);
+            input = this.RemoveCommand(key, input);
 
             string userMatchPattern = "[a-zA-Z0-9]{4,64}";
             string passMatchPattern = ".+";
@@ -36,8 +36,7 @@ namespace ESChatConsoleClient.Adapters
                 };
 
                 TokenModel token = await this.TokenController.LoginAsync(credentials);
-                Console.WriteLine($"Token: {token.Token}, Exp: {token.Exp}, Type: {token.Type}");
-                throw new NotImplementedException();
+                this.DataContext.Token = token;
             }
             else
             {

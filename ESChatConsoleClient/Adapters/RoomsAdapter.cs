@@ -16,7 +16,7 @@ namespace ESChatConsoleClient.Adapters
 
         public override async Task Execute(string key, string input)
         {
-            await base.Execute(key, input);
+            input = this.RemoveCommand(key, input);
 
             throw new NotImplementedException();
         }

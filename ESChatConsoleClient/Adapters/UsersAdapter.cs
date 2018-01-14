@@ -14,8 +14,10 @@ namespace ESChatConsoleClient.Adapters
             this.UsersController = controller;
         }
 
-        public override Task Execute(string key, string input)
+        public override async Task Execute(string key, string input)
         {
+            input = this.RemoveCommand(key, input);
+
             throw new NotImplementedException();
         }
     }

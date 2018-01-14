@@ -74,7 +74,6 @@ namespace ESChatConsoleClient
 
                         case "login":
                             await this._loginAdapter.Execute(key, userInput);
-                            throw new NotImplementedException();
                             break;
 
                         case "users":

@@ -17,7 +17,7 @@ namespace ESChatConsoleClient.Adapters
 
         public override async Task Execute(string key, string input)
         {
-            await base.Execute(key, input);
+            input = this.RemoveCommand(key, input);
             if (Regex.IsMatch(input, "^(-F|--find|-A|--add|-R|--remove) [a-zA-Z]{8,64}$"))
             {
                 throw new NotImplementedException();

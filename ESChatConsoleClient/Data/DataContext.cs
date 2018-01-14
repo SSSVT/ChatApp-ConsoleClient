@@ -1,6 +1,5 @@
 ﻿using ESChatConsoleClient.Models.Server;
 using System.Collections.Concurrent;
-using System.Linq;
 
 namespace ESChatConsoleClient.Data
 {
@@ -11,6 +10,10 @@ namespace ESChatConsoleClient.Data
         protected DataContext()
         {
             this.Friendships = new ConcurrentBag<Friendship>();
+            this.Messages = new ConcurrentBag<Message>();
+            this.Participant = new ConcurrentBag<Participant>();
+            this.Rooms = new ConcurrentBag<Room>();
+            this.Users = new ConcurrentBag<User>();
         }
         public static DataContext _Instance { get; set; }
         public static DataContext GetInstance()
@@ -26,11 +29,49 @@ namespace ESChatConsoleClient.Data
         public ConcurrentBag<Participant> Participant { get; set; }
         public ConcurrentBag<Room> Rooms { get; set; }
         public ConcurrentBag<User> Users { get; set; }
-        public ConcurrentBag<TokenModel> Tokens { get; set; }
 
-        public TokenModel GetLastToken()
+        #region CurrentUser
+        protected object CurrentUserLock = new object();
+        protected User _User;
+        public User User
         {
-            return this.Tokens.OrderByDescending(x => x.Expiration).FirstOrDefault();
+            get
+            {
+                lock (CurrentUserLock)
+                {
+                    return _User;
+                }
+            }
+            set
+            {
+                lock (CurrentUserLock)
+                {
+                    _User = value;
+                }
+            }
         }
+        #endregion
+
+        #region Token
+        protected object TokenLock = new object();
+        protected TokenModel _Token;
+        public TokenModel Token
+        {
+            get
+            {
+                lock (TokenLock)
+                {
+                    return _Token;
+                }
+            }
+            set
+            {
+                lock (TokenLock)
+                {
+                    _Token = value;
+                }
+            }
+        }
+        #endregion
     }
 }

@@ -19,11 +19,11 @@ namespace ESChatConsoleClient.Controllers
         {
             try
             {
-                StringContent content = new StringContent(JsonConvert.SerializeObject(registration));
+                StringContent content = new StringContent(JsonConvert.SerializeObject(registration), Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await this.HttpClient.PostAsync($"RegisterAsync", content);
 
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     return JsonConvert.DeserializeObject<User>(responseContent);

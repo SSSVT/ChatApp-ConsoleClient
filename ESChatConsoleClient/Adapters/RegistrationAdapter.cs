@@ -17,7 +17,8 @@ namespace ESChatConsoleClient.Adapters
 
         public override async Task Execute(string key, string input)
         {
-            await base.Execute(key, input);
+            input = this.RemoveCommand(key, input);
+
             string firstNameMatchPattern = "^((-F|--firstname) ([A-Z][a-z]{2,}))";
             string middleNameMatchPattern = "( (-M|--middlename) ([A-Z][a-z]{2,}))?";
             string lastNameMatchPattern = "((-L|--lastname) ([A-Z][a-z]{2,}))";
@@ -52,9 +53,8 @@ namespace ESChatConsoleClient.Adapters
                     Password = passMatch.Value.Replace("-P ", "").Replace("--password ", "")
                 };
 
-                User user = await this.RegistrationController.RegisterAsync(registration);
-
-                throw new NotImplementedException();
+                this.DataContext.User = await this.RegistrationController.RegisterAsync(registration);
+                Console.WriteLine("Succesfully ");
             }
             else
             {
