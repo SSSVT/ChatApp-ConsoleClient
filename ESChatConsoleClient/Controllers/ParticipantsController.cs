@@ -1,36 +1,108 @@
 ﻿using ESChatConsoleClient.Models.Server;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ESChatConsoleClient.Controllers
 {
-    public class ParticipantsController : Controller
+    public class ParticipantsController : SecuredController
     {
         public ParticipantsController(string serverUrl, string controllerName) : base(serverUrl, controllerName)
         {
         }
 
-        public async Task<Participant> GetByUserIDAsync()
+        public async Task<List<Participant>> GetByUserIDAsync(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.SetAuthorizationHeader();
+
+                HttpResponseMessage response = await this.HttpClient.GetAsync($"GetByUserIDAsync/{id}");
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<List<Participant>>(responseContent);
+                }
+
+                throw new HttpRequestException($"There was an exception: { response.StatusCode }");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        public async Task<Participant> GetByRoomIDAsync()
+        public async Task<List<Participant>> GetByRoomIDAsync(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.SetAuthorizationHeader();
+
+                HttpResponseMessage response = await this.HttpClient.GetAsync($"GetByRoomIDAsync/{id}");
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<List<Participant>>(responseContent);
+                }
+
+                throw new HttpRequestException($"There was an exception: { response.StatusCode }");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        public async Task<Participant> PostParticipantAsync()
+        public async Task<Participant> PostParticipantAsync(Participant participant)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.SetAuthorizationHeader();
+
+                StringContent content = new StringContent(JsonConvert.SerializeObject(participant), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.HttpClient.PostAsync($"PostParticipantAsync", content);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Participant>(responseContent);
+                }
+
+                throw new HttpRequestException($"There was an exception: { response.StatusCode }");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        public async Task<Participant> DeleteParticipantAsync()
+        public async Task<Participant> DeleteParticipantAsync(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.SetAuthorizationHeader();
+
+                HttpResponseMessage response = await this.HttpClient.DeleteAsync($"DeleteParticipantAsync/{id}");
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Participant>(responseContent);
+                }
+
+                throw new HttpRequestException($"There was an exception: { response.StatusCode }");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

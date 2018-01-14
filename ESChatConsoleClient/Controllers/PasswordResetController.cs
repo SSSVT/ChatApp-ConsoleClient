@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ESChatConsoleClient.Controllers
 {
-    public class PasswordResetController : Controller
+    public class PasswordResetController : SecuredController
     {
         public PasswordResetController(string serverUrl, string controllerName) : base(serverUrl, controllerName)
         {

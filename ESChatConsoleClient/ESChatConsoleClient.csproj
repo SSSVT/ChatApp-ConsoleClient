@@ -62,6 +62,7 @@
     <Compile Include="Controllers\PasswordResetController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
+    <Compile Include="Controllers\SecuredController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\DataContext.cs" />

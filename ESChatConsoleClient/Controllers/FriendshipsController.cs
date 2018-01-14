@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ESChatConsoleClient.Controllers
 {
-    public class FriendshipsController : Controller
+    public class FriendshipsController : SecuredController
     {
         public FriendshipsController(string serverUrl, string controllerName) : base(serverUrl, controllerName)
         {
@@ -19,6 +19,8 @@ namespace ESChatConsoleClient.Controllers
         {
             try
             {
+                this.SetAuthorizationHeader();
+
                 HttpResponseMessage response = await this.HttpClient.GetAsync($"GetByUserIDAsync/{id}");
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -39,6 +41,8 @@ namespace ESChatConsoleClient.Controllers
         {
             try
             {
+                this.SetAuthorizationHeader();
+
                 HttpResponseMessage response = await this.HttpClient.GetAsync($"GetAcceptedByUserIDAsync/{id}");
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -59,6 +63,8 @@ namespace ESChatConsoleClient.Controllers
         {
             try
             {
+                this.SetAuthorizationHeader();
+
                 HttpResponseMessage response = await this.HttpClient.GetAsync($"GetReceivedAndPendingByUserIDAsync/{id}");
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -75,15 +81,34 @@ namespace ESChatConsoleClient.Controllers
             }
         }
 
-        public async Task<Friendship> GetFriendshipAsync()
+        public async Task<Friendship> GetFriendshipAsync(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.SetAuthorizationHeader();
+
+                HttpResponseMessage response = await this.HttpClient.GetAsync($"GetFriendshipAsync/{id}");
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Friendship>(responseContent);
+                }
+
+                throw new HttpRequestException($"There was an exception: { response.StatusCode }");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<Friendship> PostFriendshipAsync(Friendship friendship)
         {
             try
             {
+                this.SetAuthorizationHeader();
+
                 StringContent content = new StringContent(JsonConvert.SerializeObject(friendship), Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await this.HttpClient.PostAsync($"PostFriendshipAsync", content);
@@ -106,6 +131,8 @@ namespace ESChatConsoleClient.Controllers
         {
             try
             {
+                this.SetAuthorizationHeader();
+
                 StringContent content = new StringContent(JsonConvert.SerializeObject(friendship), Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await this.HttpClient.PutAsync($"PutFriendshipAsync/{friendship.ID}", content);
@@ -128,6 +155,8 @@ namespace ESChatConsoleClient.Controllers
         {
             try
             {
+                this.SetAuthorizationHeader();
+
                 HttpResponseMessage response = await this.HttpClient.DeleteAsync($"DeleteFriendshipAsync/{id}");
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -148,6 +177,8 @@ namespace ESChatConsoleClient.Controllers
         {
             try
             {
+                this.SetAuthorizationHeader();
+
                 HttpResponseMessage response = await this.HttpClient.PutAsync($"AcceptFriendshipAsync/{id}",new StringContent("", Encoding.UTF8, "application/json"));
 
                 if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
