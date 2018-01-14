@@ -1,4 +1,5 @@
 ﻿using ESChatConsoleClient.Models.Server;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,24 @@ namespace ESChatConsoleClient.Controllers
 
         public async Task<User> RegisterAsync(RegistrationModel registration)
         {
-            throw new NotImplementedException();
+            try
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(registration));
+
+                HttpResponseMessage response = await this.HttpClient.PostAsync($"RegisterAsync", content);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<User>(responseContent);
+                }
+
+                throw new HttpRequestException($"There was an exception: { response.StatusCode }");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> IsUsernameAvailableAsync(string username)
