@@ -1,6 +1,5 @@
 ﻿using ESChatConsoleClient.Adapters;
 using ESChatConsoleClient.Controllers;
-using ESChatConsoleClient.Models.Server;
 using System;
 using System.Threading.Tasks;
 
@@ -62,7 +61,8 @@ namespace ESChatConsoleClient
                             throw new NotImplementedException();
                             break;
 
-                        case "registration":
+                        case "register":
+                            await this._registrationAdapter.Execute(key, userInput);
                             throw new NotImplementedException();
                             break;
 

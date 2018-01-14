@@ -20,11 +20,13 @@ namespace ESChatConsoleClient.Adapters
         public override async Task Execute(string key, string input)
         {
             input = input.Replace($"{key} ", "");
+            string userMatchPattern = "[a-zA-Z0-9]{4,64}";
+            string passMatchPattern = ".+";
 
-            if (Regex.IsMatch(input, "^(-U|--username) [a-zA-Z]{8,64} (-P|--password) .+$"))
+            if (Regex.IsMatch(input, $"^(-U|--username) {userMatchPattern} (-P|--password) {passMatchPattern}$"))
             {
-                Match matchUsername = Regex.Match(input, "^(-U|--username) [a-zA-Z]{8,64}");
-                Match matchPassword = Regex.Match(input, "(-P|--password) .+$");
+                Match matchUsername = Regex.Match(input, $"^(-U|--username) {userMatchPattern}");
+                Match matchPassword = Regex.Match(input, $"(-P|--password) {passMatchPattern}$");
 
                 UserCredentials credentials = new UserCredentials()
                 {
@@ -33,6 +35,8 @@ namespace ESChatConsoleClient.Adapters
                 };
 
                 TokenModel token = await this.TokenController.LoginAsync(credentials);
+                Console.WriteLine($"Token: {token.Token}, Exp: {token.Exp}, Type: {token.Type}");
+                throw new NotImplementedException();
             }
             else
             {
