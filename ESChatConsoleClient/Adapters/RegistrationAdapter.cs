@@ -17,7 +17,7 @@ namespace ESChatConsoleClient.Adapters
 
         public override async Task Execute(string key, string input)
         {
-            input = input.Replace($"{key} ", "");
+            await base.Execute(key, input);
             string firstNameMatchPattern = "^((-F|--firstname) ([A-Z][a-z]{2,}))";
             string middleNameMatchPattern = "( (-M|--middlename) ([A-Z][a-z]{2,}))?";
             string lastNameMatchPattern = "((-L|--lastname) ([A-Z][a-z]{2,}))";

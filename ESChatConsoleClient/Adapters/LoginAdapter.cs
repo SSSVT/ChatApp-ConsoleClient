@@ -19,7 +19,8 @@ namespace ESChatConsoleClient.Adapters
 
         public override async Task Execute(string key, string input)
         {
-            input = input.Replace($"{key} ", "");
+            await base.Execute(key, input);
+
             string userMatchPattern = "[a-zA-Z0-9]{4,64}";
             string passMatchPattern = ".+";
 

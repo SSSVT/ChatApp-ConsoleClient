@@ -6,6 +6,9 @@ namespace ESChatConsoleClient.Adapters
     {
         protected readonly string _InvalidParams = "Invalid parameters";
 
-        public abstract Task Execute(string key, string input);
+        public virtual async Task Execute(string key, string input)
+        {
+            input = input.Replace($"{key} ", "");
+        }
     }
 }

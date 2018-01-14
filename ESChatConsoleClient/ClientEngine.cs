@@ -35,8 +35,6 @@ namespace ESChatConsoleClient
 
         public async Task StartAsync()
         {
-            //Console.WriteLine(await this.IsUsernameAvailableAsync("fam299"));
-
             while (true)
             {
                 Console.Write("> ");

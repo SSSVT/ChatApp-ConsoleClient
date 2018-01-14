@@ -15,9 +15,9 @@ namespace ESChatConsoleClient.Adapters
             this.FriendshipsController = controller;
         }
 
-        public override Task Execute(string key, string input)
+        public override async Task Execute(string key, string input)
         {
-            input = input.Replace($"{key} ", "");
+            await base.Execute(key, input);
             if (Regex.IsMatch(input, "^(-F|--find|-A|--add|-R|--remove) [a-zA-Z]{8,64}$"))
             {
                 throw new NotImplementedException();

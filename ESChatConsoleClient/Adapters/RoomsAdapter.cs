@@ -14,8 +14,10 @@ namespace ESChatConsoleClient.Adapters
             this.RoomsController = controller;
         }
 
-        public override Task Execute(string key, string input)
+        public override async Task Execute(string key, string input)
         {
+            await base.Execute(key, input);
+
             throw new NotImplementedException();
         }
     }
