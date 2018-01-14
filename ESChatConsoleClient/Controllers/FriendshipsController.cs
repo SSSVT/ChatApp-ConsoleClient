@@ -17,7 +17,6 @@ namespace ESChatConsoleClient.Controllers
 
         public async Task<List<Friendship>> GetByUserIDAsync(long id)
         {
-            //{{URL}}/api/v1/Friendships/GetByUserID/1
             try
             {
                 HttpResponseMessage response = await this.HttpClient.GetAsync($"GetByUserIDAsync/{id}");
@@ -85,14 +84,13 @@ namespace ESChatConsoleClient.Controllers
         {
             try
             {
-                StringContent content = new StringContent(JsonConvert.SerializeObject(friendship));
+                StringContent content = new StringContent(JsonConvert.SerializeObject(friendship), Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await this.HttpClient.PostAsync($"RegisterAsync", content);
+                HttpResponseMessage response = await this.HttpClient.PostAsync($"PostFriendshipAsync", content);
 
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
-                    //Nevrací náhodou token?
                     return JsonConvert.DeserializeObject<Friendship>(responseContent);
                 }
 
@@ -104,14 +102,66 @@ namespace ESChatConsoleClient.Controllers
             }
         }
 
-        public async Task<Friendship> PutFriendshipAsync()
+        public async Task<Friendship> PutFriendshipAsync(Friendship friendship)
         {
-            throw new NotImplementedException();
+            try
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(friendship), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.HttpClient.PutAsync($"PutFriendshipAsync/{friendship.ID}", content);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Friendship>(responseContent);
+                }
+
+                throw new HttpRequestException($"There was an exception: { response.StatusCode }");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        public async Task<Friendship> DeleteFriendshipAsync()
+        public async Task<Friendship> DeleteFriendshipAsync(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpResponseMessage response = await this.HttpClient.DeleteAsync($"DeleteFriendshipAsync/{id}");
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Friendship>(responseContent);
+                }
+
+                throw new HttpRequestException($"There was an exception: { response.StatusCode }");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<Friendship> AcceptFriendshipAsync(Guid id)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.HttpClient.PutAsync($"AcceptFriendshipAsync/{id}",new StringContent("", Encoding.UTF8, "application/json"));
+
+                if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Friendship>(responseContent);
+                }
+
+                throw new HttpRequestException($"There was an exception: { response.StatusCode }");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
