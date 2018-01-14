@@ -21,7 +21,7 @@ namespace ESChatConsoleClient.Adapters
             input = this.RemoveCommand(key, input);
 
             string idMatchPattern = "([0-9]+)";
-            string txtMatchPattern = "([A-Za-z0-9]+)";
+            string txtMatchPattern = @"(\w+)";
 
             string findByRoomIDMatchPattern = $"(-F|--find-by-room-id) {idMatchPattern}";
             string findByUserIDMatchPattern = $"(--find-by-user-id) {idMatchPattern}";
@@ -44,14 +44,15 @@ namespace ESChatConsoleClient.Adapters
             else if (Regex.IsMatch(input, createMatchPattern))
             {
                 string content = Regex.Match(input, $"(-C|--content) {txtMatchPattern}").Value.Replace("-C ", "").Replace("--content ", "");
-                string txtId = Regex.Match(input, $"(-I|--room-id) {txtMatchPattern}").Value.Replace("-I ", "").Replace("--room-id ", "");
+                string txtId = Regex.Match(input, $"(-I|--room-id) {idMatchPattern}").Value.Replace("-I ", "").Replace("--room-id ", "");
                 long id = Convert.ToInt64(txtId);
 
                 Message message = new Message()
                 {
                     Content = content,
                     IDUser = this.DataContext.User.ID,
-                    IDRoom = id
+                    IDRoom = id,
+                    UTCSend = DateTime.UtcNow
                 };
 
                 await this.MessagesController.CreateAsync(message);
