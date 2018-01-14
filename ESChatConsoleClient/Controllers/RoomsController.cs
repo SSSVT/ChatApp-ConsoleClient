@@ -96,7 +96,7 @@ namespace ESChatConsoleClient.Controllers
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<Room>(responseContent);5
+                    return JsonConvert.DeserializeObject<Room>(responseContent);
                 }
 
                 throw new HttpRequestException($"There was an exception: { response.StatusCode }");
