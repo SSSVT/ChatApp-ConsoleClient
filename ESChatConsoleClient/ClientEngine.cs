@@ -39,6 +39,7 @@ namespace ESChatConsoleClient
 
             while (true)
             {
+                Console.Write("> ");
                 string userInput = Console.ReadLine();
 
                 string key = userInput.Split(new char[] { ' ' })[0];
@@ -54,10 +55,12 @@ namespace ESChatConsoleClient
                             break;
                         
                         case "participants":
+                            await this._participantsAdapter.Execute(key, userInput);
                             throw new NotImplementedException();
                             break;
 
                         case "passwordreset":
+                            await this._passwordResetAdapter.Execute(key, userInput);
                             throw new NotImplementedException();
                             break;
 
@@ -67,6 +70,7 @@ namespace ESChatConsoleClient
                             break;
 
                         case "rooms":
+                            await this._roomsAdapter.Execute(key, userInput);
                             throw new NotImplementedException();
                             break;
 
@@ -76,10 +80,12 @@ namespace ESChatConsoleClient
                             break;
 
                         case "users":
+                            await this._usersAdapter.Execute(key, userInput);
                             throw new NotImplementedException();
                             break;
 
                         default:
+                            await this._messagesAdapter.Execute(key, userInput);
                             Console.WriteLine("Message wrote");
                             break;
                     }
