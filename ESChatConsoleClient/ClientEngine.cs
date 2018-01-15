@@ -1,5 +1,6 @@
 ﻿using ESChatConsoleClient.Adapters;
 using ESChatConsoleClient.Controllers;
+using ESChatConsoleClient.Views;
 using System;
 using System.Threading.Tasks;
 
@@ -8,32 +9,38 @@ namespace ESChatConsoleClient
     public sealed class ClientEngine
     {
         #region Fields
-        //Máš toto
-        private readonly FriendshipsAdapter _friendshipsAdapter;
-        private readonly MessagesAdapter _messagesAdapter;
-        private readonly ParticipantsAdapter _participantsAdapter;
-        private readonly PasswordResetAdapter _passwordResetAdapter;
+        //private readonly FriendshipsAdapter _friendshipsAdapter;
+        //private readonly MessagesAdapter _messagesAdapter;
+        //private readonly ParticipantsAdapter _participantsAdapter;
+        //private readonly PasswordResetAdapter _passwordResetAdapter;
 
-        //Beru si toto
-        private readonly RegistrationAdapter _registrationAdapter;
-        private readonly RoomsAdapter _roomsAdapter;
-        private readonly LoginAdapter _loginAdapter;
-        private readonly UsersAdapter _usersAdapter;
+        //private readonly RegistrationAdapter _registrationAdapter;
+        //private readonly RoomsAdapter _roomsAdapter;
+        //private readonly LoginAdapter _loginAdapter;
+        //private readonly UsersAdapter _usersAdapter;
+
+        private LogedOffView _logOffView;
         #endregion
 
         public ClientEngine(string serverUrl)
         {
-            this._friendshipsAdapter = new FriendshipsAdapter(new FriendshipsController(serverUrl, "Friendships"));
-            this._messagesAdapter = new MessagesAdapter(new MessagesController(serverUrl, "Messages"));
-            this._participantsAdapter = new ParticipantsAdapter(new ParticipantsController(serverUrl, "Participants"));
-            this._passwordResetAdapter = new PasswordResetAdapter(new PasswordResetController(serverUrl, "PasswordReset"));
-            this._registrationAdapter = new RegistrationAdapter(new RegistrationController(serverUrl, "Registration"));
-            this._roomsAdapter = new RoomsAdapter(new RoomsController(serverUrl, "Rooms"));
-            this._loginAdapter = new LoginAdapter(new TokenController(serverUrl, "Token"));
-            this._usersAdapter = new UsersAdapter(new UsersController(serverUrl, "Users"));
+            //this._friendshipsAdapter = new FriendshipsAdapter(new FriendshipsController(serverUrl, "Friendships"));
+            //this._messagesAdapter = new MessagesAdapter(new MessagesController(serverUrl, "Messages"));
+            //this._participantsAdapter = new ParticipantsAdapter(new ParticipantsController(serverUrl, "Participants"));
+            //this._passwordResetAdapter = new PasswordResetAdapter(new PasswordResetController(serverUrl, "PasswordReset"));
+            //this._registrationAdapter = new RegistrationAdapter(new RegistrationController(serverUrl, "Registration"));
+            //this._roomsAdapter = new RoomsAdapter(new RoomsController(serverUrl, "Rooms"));
+            //this._loginAdapter = new LoginAdapter(new TokenController(serverUrl, "Token"));
+            //this._usersAdapter = new UsersAdapter(new UsersController(serverUrl, "Users"));
+            _logOffView = new LogedOffView();
         }
 
-        public async Task StartAsync()
+        public void Start()
+        {
+            _logOffView.Start();
+        }
+
+        /*public async Task StartAsync()
         {
             while (true)
             {
@@ -91,6 +98,6 @@ namespace ESChatConsoleClient
                     Console.WriteLine(ex.Message);
                 }                
             }
-        }
+        }*/
     }
 }

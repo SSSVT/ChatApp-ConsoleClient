@@ -12,8 +12,11 @@ namespace ESChatConsoleClient.Views
         public LoginView()
         {
             this.AddViewItems(
-                            new InputViewItem("Login", ""),
-                            new InputViewItem("Register", ""));
+                            new InputViewItem("Username", ""),
+                            new InputViewItem("Password", ""),
+                            new ActionViewItem("Login",() => { }));
+
+            this.SelectViewItem(0);
         }        
     }
 }

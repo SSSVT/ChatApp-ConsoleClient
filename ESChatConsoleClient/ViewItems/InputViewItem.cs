@@ -18,7 +18,12 @@ namespace ESChatConsoleClient.ViewItems
 
         public override void Draw()
         {
+            if (this.Selected)
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+
             Console.WriteLine(this.Label + ": " + this.Value);
+
+            Console.ResetColor();
         }
     }
     

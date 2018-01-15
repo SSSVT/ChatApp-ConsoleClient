@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace ESChatConsoleClient.Views
 {
-    public class LogOffView : View
+    public class LogedOffView : View
     {
-        public LogOffView()
+        public LogedOffView()
         {            
             this.AddViewItems(
                 new ActionViewItem("Login", () => { }),
                 new ActionViewItem("Register", () => { }));
+
+            this.SelectViewItem(0);
         }
     }
 }
