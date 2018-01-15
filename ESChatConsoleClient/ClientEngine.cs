@@ -37,7 +37,6 @@ namespace ESChatConsoleClient
         {
             while (true)
             {
-                Console.Write("> ");
                 string userInput = Console.ReadLine();
 
                 string key = userInput.Split(new char[] { ' ' })[0];
