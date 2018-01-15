@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace ESChatConsoleClient.Models.Server
 {
@@ -9,5 +10,8 @@ namespace ESChatConsoleClient.Models.Server
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime? UTCCreationDate { get; set; }
+
+        [JsonIgnore]
+        public bool IsActive { get; set; }
     }
 }

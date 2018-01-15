@@ -20,9 +20,33 @@ namespace ESChatConsoleClient.Adapters
         {
             input = this.RemoveCommand(key, input);
 
-            string idMatchPattern = "([0-9]+)";
-            string txtMatchPattern = @"(\w+)";
+            if (this.DataContext.GetActiveRoom != null)
+            {
+                string idMatchPattern = "([0-9]+)";
+                string txtMatchPattern = @"(\w+)";
 
+                string content = Regex.Match(input, $"(-C|--content) {txtMatchPattern}").Value.Replace("-C ", "").Replace("--content ", "");
+                string txtId = Regex.Match(input, $"(-I|--room-id) {idMatchPattern}").Value.Replace("-I ", "").Replace("--room-id ", "");
+                long id = Convert.ToInt64(txtId);
+
+                Message message = new Message()
+                {
+                    Content = content,
+                    IDUser = this.DataContext.User.ID,
+                    IDRoom = id,
+                    UTCSend = DateTime.UtcNow
+                };
+
+                await this.MessagesController.CreateAsync(message);
+                this.DataContext.Messages.Add(message);
+                this.Print(message);
+            }
+            else
+            {
+                Console.WriteLine("Unknown command");
+            }
+
+            /*
             string findByRoomIDMatchPattern = $"(-F|--find-by-room-id) {idMatchPattern}";
             string findByUserIDMatchPattern = $"(--find-by-user-id) {idMatchPattern}";
             string createMatchPattern = $"(-C|--create) (-I|--room-id) {idMatchPattern} (-C|--content) {txtMatchPattern} ";
@@ -43,24 +67,11 @@ namespace ESChatConsoleClient.Adapters
             }
             else if (Regex.IsMatch(input, createMatchPattern))
             {
-                string content = Regex.Match(input, $"(-C|--content) {txtMatchPattern}").Value.Replace("-C ", "").Replace("--content ", "");
-                string txtId = Regex.Match(input, $"(-I|--room-id) {idMatchPattern}").Value.Replace("-I ", "").Replace("--room-id ", "");
-                long id = Convert.ToInt64(txtId);
 
-                Message message = new Message()
-                {
-                    Content = content,
-                    IDUser = this.DataContext.User.ID,
-                    IDRoom = id,
-                    UTCSend = DateTime.UtcNow
-                };
-
-                await this.MessagesController.CreateAsync(message);
-                this.DataContext.Messages.Add(message);
-                this.Print(message);
             }
+            */
         }
-       
+
     }
     public partial class MessagesAdapter
     {

@@ -1,5 +1,6 @@
 ﻿using ESChatConsoleClient.Models.Server;
 using System.Collections.Concurrent;
+using System.Linq;
 
 namespace ESChatConsoleClient.Data
 {
@@ -70,6 +71,27 @@ namespace ESChatConsoleClient.Data
                 {
                     _Token = value;
                 }
+            }
+        }
+        #endregion
+
+        #region ActiveRoom
+        public Room GetActiveRoom => this.Rooms.Where(x => x.IsActive).FirstOrDefault();
+        public void SetActiveRoom(long id)
+        {
+            Room item = this.Rooms.Where(x => x.IsActive).FirstOrDefault();
+            if (item != null)
+            {
+                item.IsActive = false;
+            }
+            item = this.Rooms.Where(x => x.IsActive).FirstOrDefault();
+            if (item != null)
+            {
+                item.IsActive = true;
+            }
+            else
+            {
+                throw new System.ArgumentException("Room not found");
             }
         }
         #endregion

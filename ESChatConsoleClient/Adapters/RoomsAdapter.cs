@@ -28,6 +28,8 @@ namespace ESChatConsoleClient.Adapters
             string findAllMatchPattern = $"((-F|--find-all))";
             string findByUserIDMatchPattern = $"((--find-by-user-id) {idMatchPattern}$)";
 
+            string selectMatchPattern = $"((-S|--select) {idMatchPattern})";
+
             string createMatchPattern = $"((-C|--create) (-N|--name) {txtMatchPattern} (-D|--description) {txtMatchPattern}$)";
             string updateMatchPattern = $"((-U|--update) (-I|--id) {idMatchPattern} (-N|--name) {txtMatchPattern} (-D|--description) {txtMatchPattern}$)";
             string deleteMatchPattern = $"((-D|--delete) {idMatchPattern}$)";
@@ -50,6 +52,12 @@ namespace ESChatConsoleClient.Adapters
                 long id = Convert.ToInt64(match.Value);
                 List<Room> rooms = await this.RoomsController.FindByUserIDAsync(id);
                 this.Print(rooms);
+            }
+            else if (Regex.IsMatch(input, selectMatchPattern))
+            {
+                Match match = Regex.Match(input, idMatchPattern);
+                long id = Convert.ToInt64(match.Value);
+                this.DataContext.SetActiveRoom(id);
             }
             else if (Regex.IsMatch(input, createMatchPattern))
             {
