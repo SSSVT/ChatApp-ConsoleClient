@@ -13,6 +13,9 @@ namespace ESChatConsoleClient.ViewItems
         public PasswordInputViewItem(string label, string value) : base(label, value)
         {
         }
+        public PasswordInputViewItem(string label) : base(label)
+        {
+        }
 
         public override void Draw()
         {

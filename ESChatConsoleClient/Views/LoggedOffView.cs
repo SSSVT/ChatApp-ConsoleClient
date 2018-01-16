@@ -13,7 +13,8 @@ namespace ESChatConsoleClient.Views
         {
             this.AddViewItems(
                 new ActionViewItem("Login", () => { clientEngine.AddView(new LoginView(clientEngine)); }),
-                new ActionViewItem("Register", () => { clientEngine.AddView(new RegisterView(clientEngine)); }));
+                new ActionViewItem("Register", () => { clientEngine.AddView(new RegisterView(clientEngine)); }),
+                new ActionViewItem("Close", () => { Environment.Exit(0); }));
 
             this.SelectViewItem(0);
         }

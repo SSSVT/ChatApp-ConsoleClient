@@ -79,6 +79,7 @@
     <Compile Include="ViewItems\ActionViewItem.cs" />
     <Compile Include="ViewItems\IDrawable.cs" />
     <Compile Include="ViewItems\InputViewItem.cs" />
+    <Compile Include="ViewItems\MessageViewItem.cs" />
     <Compile Include="ViewItems\PasswordInputViewItem.cs" />
     <Compile Include="ViewItems\ViewItem.cs" />
     <Compile Include="Views\FriendsView.cs" />

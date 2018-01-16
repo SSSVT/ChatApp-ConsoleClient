@@ -16,7 +16,7 @@ namespace ESChatConsoleClient
                 //string serverAddress = Console.ReadLine();
                 //ClientEngine engine = new ClientEngine(serverAddress);
 
-                ClientEngine engine = new ClientEngine("http://localhost:53513/api/v1/");
+                ClientEngine engine = new ClientEngine("http://localhost:54777/api/v1/");
                 //engine.StartAsync().Wait();
                 engine.Start();
             }

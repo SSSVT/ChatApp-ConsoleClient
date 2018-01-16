@@ -9,12 +9,17 @@ namespace ESChatConsoleClient.ViewItems
   
     public class InputViewItem : ViewItem
     {
+        public string Value { get; set; } = "";
+
         public InputViewItem(string label, string value) : base(label)
         {
             this.Value = value;
         }
 
-        public string Value { get; set; }
+        public InputViewItem(string label) : base(label)
+        {
+
+        }
 
         public override void Draw()
         {
