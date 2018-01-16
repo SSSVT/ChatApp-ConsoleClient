@@ -9,7 +9,7 @@ namespace ESChatConsoleClient.Views
 {
     public class LoginView : View
     {
-        public LoginView()
+        public LoginView(ClientEngine clientEngine) : base(clientEngine)
         {
             this.AddViewItems(
                             new InputViewItem("Username", ""),

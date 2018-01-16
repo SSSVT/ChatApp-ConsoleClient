@@ -2,6 +2,7 @@
 using ESChatConsoleClient.Controllers;
 using ESChatConsoleClient.Views;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ESChatConsoleClient
@@ -19,85 +20,46 @@ namespace ESChatConsoleClient
         //private readonly LoginAdapter _loginAdapter;
         //private readonly UsersAdapter _usersAdapter;
 
-        private LogedOffView _logOffView;
+        private Stack<View> Views { get; set; } = new Stack<View>();
+        private View CurrentView
+        {
+            get
+            {
+                return this.Views.Peek();
+            }
+        }
         #endregion
 
         public ClientEngine(string serverUrl)
         {
-            //this._friendshipsAdapter = new FriendshipsAdapter(new FriendshipsController(serverUrl, "Friendships"));
-            //this._messagesAdapter = new MessagesAdapter(new MessagesController(serverUrl, "Messages"));
-            //this._participantsAdapter = new ParticipantsAdapter(new ParticipantsController(serverUrl, "Participants"));
-            //this._passwordResetAdapter = new PasswordResetAdapter(new PasswordResetController(serverUrl, "PasswordReset"));
-            //this._registrationAdapter = new RegistrationAdapter(new RegistrationController(serverUrl, "Registration"));
-            //this._roomsAdapter = new RoomsAdapter(new RoomsController(serverUrl, "Rooms"));
-            //this._loginAdapter = new LoginAdapter(new TokenController(serverUrl, "Token"));
-            //this._usersAdapter = new UsersAdapter(new UsersController(serverUrl, "Users"));
-            _logOffView = new LogedOffView();
+            //LoggedOff or Home podle uloženýho tokenu
+            LoggedOffView loggedOffView = new LoggedOffView(this);
+            this.Views.Push(loggedOffView);
         }
 
         public void Start()
         {
-            _logOffView.Start();
-        }
-
-        /*public async Task StartAsync()
-        {
             while (true)
             {
-                string userInput = Console.ReadLine();
+                this.CurrentView.Draw();
 
-                string key = userInput.Split(new char[] { ' ' })[0];
-                string strKey = key.ToLower();
+                ConsoleKeyInfo c = Console.ReadKey();
 
-                try
-                {
-                    switch (strKey)
-                    {
-                        case "friend":
-                            await this._friendshipsAdapter.Execute(key, userInput);
-                            throw new NotImplementedException();
-                            break;
-                        
-                        case "participants":
-                            await this._participantsAdapter.Execute(key, userInput);
-                            throw new NotImplementedException();
-                            break;
+                this.CurrentView.OnInput(c);
+            }            
+        }
 
-                        case "passwordreset":
-                            await this._passwordResetAdapter.Execute(key, userInput);
-                            throw new NotImplementedException();
-                            break;
+        public void AddView(View view)
+        {
+            this.Views.Push(view);
+        }
 
-                        case "register":
-                            await this._registrationAdapter.Execute(key, userInput);
-                            break;
-
-                        case "rooms":
-                            await this._roomsAdapter.Execute(key, userInput);
-                            throw new NotImplementedException();
-                            break;
-
-                        case "login":
-                            await this._loginAdapter.Execute(key, userInput);
-                            break;
-
-                        case "users":
-                            await this._usersAdapter.Execute(key, userInput);
-                            throw new NotImplementedException();
-                            break;
-
-                        default:
-                            await this._messagesAdapter.Execute(key, userInput);
-                            Console.WriteLine("Message wrote");
-                            break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    //TODO: Save exception
-                    Console.WriteLine(ex.Message);
-                }                
-            }
-        }*/
+        public void PopView()
+        {
+            if (this.Views.Count > 1)
+            {
+                this.Views.Pop();
+            }  
+        }
     }
 }

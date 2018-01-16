@@ -10,6 +10,8 @@ namespace ESChatConsoleClient
             {
                 Console.Title = "ESChatConsoleClient for Windows";
 
+                Console.CursorVisible = false;
+
                 //Console.Write("Enter server URL: ");
                 //string serverAddress = Console.ReadLine();
                 //ClientEngine engine = new ClientEngine(serverAddress);
