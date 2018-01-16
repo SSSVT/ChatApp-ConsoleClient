@@ -10,11 +10,23 @@ namespace ESChatConsoleClient.Views
 {
     public class HomeView : View
     {
+        private DataContext _dataContext = DataContext.GetInstance();
+
         public HomeView(ClientEngine clientEngine) : base(clientEngine)
         {
-            this.AddViewItems(new ActionViewItem("Hello", () => { }));
+            this.AddViewItems(
+                new MessageViewItem("Hello " + _dataContext.User.Username),
+                new ActionViewItem("Logout", () => { this.LogOut(); }));
 
             this.SelectViewItem(0);
+        }
+
+        private void LogOut()
+        {
+            _dataContext.Token = null;
+            _dataContext.User = null;
+
+            this.ClientEngine.PopView();
         }
     }
 }

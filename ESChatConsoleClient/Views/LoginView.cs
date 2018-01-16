@@ -42,6 +42,8 @@ namespace ESChatConsoleClient.Views
             {
                 TokenModel token = await this.ClientEngine.TokenController.LoginAsync(credentials);
                 DataContext.GetInstance().Token = token;
+                User user = await this.ClientEngine.UsersController.GetCurrentUserAsync();
+                DataContext.GetInstance().User = user;
 
                 this.ClientEngine.AddView(new HomeView(this.ClientEngine));
             }
