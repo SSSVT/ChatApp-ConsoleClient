@@ -56,6 +56,7 @@ namespace ESChatConsoleClient
         public void AddView(View view)
         {
             this.Views.Push(view);
+            this.CurrentView.Draw();
         }
 
         public void PopView()
@@ -63,6 +64,7 @@ namespace ESChatConsoleClient
             if (this.Views.Count > 1)
             {
                 this.Views.Pop();
+                this.CurrentView.Draw();
             }  
         }
     }
