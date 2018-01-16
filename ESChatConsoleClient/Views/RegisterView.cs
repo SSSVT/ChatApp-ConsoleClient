@@ -13,7 +13,13 @@ namespace ESChatConsoleClient.Views
         {
             this.AddViewItems(
                             new InputViewItem("Username", ""),
-                            new InputViewItem("Password", ""),
+                            new PasswordInputViewItem("Password", ""),
+                            new InputViewItem("Email", ""),
+                            new InputViewItem("First Name", ""),
+                            new InputViewItem("Middle Name", ""),
+                            new InputViewItem("Last Name", ""),
+                            new InputViewItem("Gender", ""),
+                            new InputViewItem("Birthdate", ""),
                             new ActionViewItem("Register", () => { }));
 
             this.SelectViewItem(0);

@@ -9,17 +9,6 @@ namespace ESChatConsoleClient
 {
     public sealed class ClientEngine
     {
-        #region Fields
-        //private readonly FriendshipsAdapter _friendshipsAdapter;
-        //private readonly MessagesAdapter _messagesAdapter;
-        //private readonly ParticipantsAdapter _participantsAdapter;
-        //private readonly PasswordResetAdapter _passwordResetAdapter;
-
-        //private readonly RegistrationAdapter _registrationAdapter;
-        //private readonly RoomsAdapter _roomsAdapter;
-        //private readonly LoginAdapter _loginAdapter;
-        //private readonly UsersAdapter _usersAdapter;
-
         private Stack<View> Views { get; set; } = new Stack<View>();
         private View CurrentView
         {
@@ -28,13 +17,10 @@ namespace ESChatConsoleClient
                 return this.Views.Peek();
             }
         }
-        #endregion
-
         public ClientEngine(string serverUrl)
         {
             //LoggedOff or Home podle uloženýho tokenu
-            LoggedOffView loggedOffView = new LoggedOffView(this);
-            this.Views.Push(loggedOffView);
+            this.AddView(new LoggedOffView(this));
         }
 
         public void Start()
