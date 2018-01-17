@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace ESChatConsoleClient.Views
 {
-    public class RoomChatView : View
+    class CreateRoomView
     {
-        public RoomChatView(ClientEngine clientEngine) : base(clientEngine)
-        {
-        }
     }
 }

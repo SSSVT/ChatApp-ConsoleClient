@@ -16,6 +16,8 @@ namespace ESChatConsoleClient.Views
         {
             this.AddViewItems(
                 new MessageViewItem("Hello " + _dataContext.User.Username),
+                new ActionViewItem("Rooms", () => { this.ClientEngine.AddView(new RoomsView(this.ClientEngine)); }),
+                new ActionViewItem("Friends", () => { this.ClientEngine.AddView(new FriendsView(this.ClientEngine)); }),
                 new ActionViewItem("Logout", () => { this.LogOut(); }));
 
             this.SelectViewItem(0);
